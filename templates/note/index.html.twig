@@ -41,9 +41,29 @@
       <p>Pas de post en ligne.</p>
     {% endfor %}
   </div>
-  <div class="text-center mt-8">
+  <div class="text-center custom-pagination mt-8">
         {{ knp_pagination_render(pagination) }}
   </div>
 </div>
+
+    <style>
+.custom-pagination .pagination .page{
+    background: rgb(99, 102, 241, 0.5 );
+    
+    margin: 1%;
+    align-items: center;
+    display: inline-block;
+    padding: 2px 8px;
+}
+
+.custom-pagination .pagination .current{
+  background: rgb(79, 70, 229);
+    margin: 1%;
+    color:white;
+    align-items: center;
+    display: inline-block;
+    padding: 2px 8px;
+}
+</style>
 
 {% endblock %}

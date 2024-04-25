@@ -20,15 +20,13 @@ class NoteController extends AbstractController
     #[Route('/', name: 'app_note_index', methods: ['GET'])]
     public function index(NoteRepository $noteRepository, PaginatorInterface $paginator, Request $request): Response
     {
-        // return $this->render('note/index.html.twig', [
-        //     'notes' => $noteRepository->findAll(),
-        // ]);
+    
         $queryBuilder = $noteRepository->createQueryBuilder('n');
 
         $pagination = $paginator->paginate(
-            $queryBuilder, /* query NOT result */
-            $request->query->getInt('page', 1), /* page number */
-            10 /* limit per page */
+            $queryBuilder, 
+            $request->query->getInt('page', 1), 
+            9
         );
 
         return $this->render('note/index.html.twig', [
@@ -39,31 +37,21 @@ class NoteController extends AbstractController
     #[Route('/my-notes', name: 'app_my_notes', methods: ['GET'])]
     public function userNotes(NoteRepository $noteRepository, PaginatorInterface $paginator, Request $request): Response
     {
-        // $currentUser = $this->getUser();
-        // if ($currentUser === null) {
-        //     return $this->redirectToRoute('app_login', [], Response::HTTP_SEE_OTHER);
-        // }
-        // $notes = $noteRepository->findBy(['owner' => $currentUser], ['createdAt' => 'desc']);
-
-        // return $this->render('note/index-2.html.twig', [
-        //     'notes' => $notes,
-        // ]);
+        
         $currentUser = $this->getUser();
         if ($currentUser === null) {
             return $this->redirectToRoute('app_login', [], Response::HTTP_SEE_OTHER);
         }
 
-        // Create a query builder that retrieves only the current user's notes
         $queryBuilder = $noteRepository->createQueryBuilder('n')
             ->where('n.owner = :owner')
             ->setParameter('owner', $currentUser)
             ->orderBy('n.createdAt', 'DESC');
 
-        // Paginate the results
         $pagination = $paginator->paginate(
-            $queryBuilder, // query NOT result
+            $queryBuilder, 
             $request->query->getInt('page', 1),
-            10
+            9
         );
 
         return $this->render('note/index-2.html.twig', [
