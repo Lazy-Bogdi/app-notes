@@ -2,39 +2,72 @@
 
 namespace App\Controller;
 
+use DateTime;
 use App\Entity\Note;
 use App\Form\NoteType;
-use App\Repository\NoteRepository;
-use DateTime;
 use DateTimeImmutable;
+use App\Repository\NoteRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 #[Route('/note')]
 class NoteController extends AbstractController
 {
     #[Route('/', name: 'app_note_index', methods: ['GET'])]
-    public function index(NoteRepository $noteRepository): Response
+    public function index(NoteRepository $noteRepository, PaginatorInterface $paginator, Request $request): Response
     {
+        // return $this->render('note/index.html.twig', [
+        //     'notes' => $noteRepository->findAll(),
+        // ]);
+        $queryBuilder = $noteRepository->createQueryBuilder('n');
+
+        $pagination = $paginator->paginate(
+            $queryBuilder, /* query NOT result */
+            $request->query->getInt('page', 1), /* page number */
+            10 /* limit per page */
+        );
+
         return $this->render('note/index.html.twig', [
-            'notes' => $noteRepository->findAll(),
+            'pagination' => $pagination,
         ]);
     }
 
     #[Route('/my-notes', name: 'app_my_notes', methods: ['GET'])]
-    public function userNotes(NoteRepository $noteRepository): Response
+    public function userNotes(NoteRepository $noteRepository, PaginatorInterface $paginator, Request $request): Response
     {
+        // $currentUser = $this->getUser();
+        // if ($currentUser === null) {
+        //     return $this->redirectToRoute('app_login', [], Response::HTTP_SEE_OTHER);
+        // }
+        // $notes = $noteRepository->findBy(['owner' => $currentUser], ['createdAt' => 'desc']);
+
+        // return $this->render('note/index-2.html.twig', [
+        //     'notes' => $notes,
+        // ]);
         $currentUser = $this->getUser();
         if ($currentUser === null) {
             return $this->redirectToRoute('app_login', [], Response::HTTP_SEE_OTHER);
         }
-        $notes = $noteRepository->findBy(['owner' => $currentUser], ['createdAt' => 'desc']);
-        
+
+        // Create a query builder that retrieves only the current user's notes
+        $queryBuilder = $noteRepository->createQueryBuilder('n')
+            ->where('n.owner = :owner')
+            ->setParameter('owner', $currentUser)
+            ->orderBy('n.createdAt', 'DESC');
+
+        // Paginate the results
+        $pagination = $paginator->paginate(
+            $queryBuilder, // query NOT result
+            $request->query->getInt('page', 1),
+            10
+        );
+
         return $this->render('note/index-2.html.twig', [
-            'notes' => $notes,
+            'pagination' => $pagination
         ]);
     }
 
