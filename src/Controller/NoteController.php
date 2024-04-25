@@ -24,6 +24,20 @@ class NoteController extends AbstractController
         ]);
     }
 
+    #[Route('/my-notes', name: 'app_my_notes', methods: ['GET'])]
+    public function userNotes(NoteRepository $noteRepository): Response
+    {
+        $currentUser = $this->getUser();
+        if ($currentUser === null) {
+            return $this->redirectToRoute('app_login', [], Response::HTTP_SEE_OTHER);
+        }
+        $notes = $noteRepository->findBy(['owner' => $currentUser], ['created_at' => 'desc']);
+        
+        return $this->render('note/index.html.twig', [
+            'notes' => $notes,
+        ]);
+    }
+
     #[Route('/new', name: 'app_note_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
