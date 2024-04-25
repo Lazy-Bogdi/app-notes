@@ -5,30 +5,13 @@
         <title>{% block title %}Welcome!{% endblock %}</title>
         <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text><text y=%221.3em%22 x=%220.2em%22 font-size=%2276%22 fill=%22%23fff%22>sf</text></svg>">
         <script src="https://cdn.tailwindcss.com"></script>
+        <script src="https://cdn.jsdelivr.net/npm/flowbite@latest/dist/flowbite.min.js"></script>
+
         {% block stylesheets %}
         {% endblock %}
 
         {% block javascripts %}
             {% block importmap %}{{ importmap('app') }}{% endblock %}
-             <script>
-                document.addEventListener('DOMContentLoaded', function () {
-                    const userMenuButton = document.getElementById('user-menu-button');
-                    const userMenu = document.querySelector('[role="menu"]');
-
-                    userMenuButton.addEventListener('click', function () {
-                        const isExpanded = userMenuButton.getAttribute('aria-expanded') === 'true' || false;
-                        userMenuButton.setAttribute('aria-expanded', !isExpanded);
-                        userMenu.classList.toggle('hidden');
-                    });
-
-                    document.addEventListener('click', function (event) {
-                        if (!userMenu.contains(event.target) && !userMenuButton.contains(event.target)) {
-                            userMenuButton.setAttribute('aria-expanded', false);
-                            userMenu.classList.add('hidden');
-                        }
-                    });
-                });
-            </script>
         {% endblock %}
     </head>
     <body class="bg-white">
@@ -66,31 +49,25 @@
           <div>
             
               {% if app.user %} 
-                <button type="button" class="relative flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800" id="user-menu-button" aria-expanded="false" aria-haspopup="true">
-                  <span class="absolute -inset-1.5"></span>
-                  <span class="sr-only">Ouvrir</span>
-                  <img class="h-8 w-8 rounded-full" src="{{app.user.profilePictureUrl}}" alt=""> 
-                </button>
+                 
+        <div class="relative">
+        <button onclick="toggleDropdown()" class=" flex flex-row items-center">
+            <img class="h-8 w-8 rounded-full" src="{{app.user.profilePictureUrl}}" alt="Profil"> 
+              <span class="ml-1 text-sm font-medium text-white">{{app.user.name}}</span>
+        </button>
+     
+        <div class="dropdown-menu hidden absolute right-0 mt-2 py-2 w-48 bg-gray-800 rounded-md shadow-xl z-50" id="myDropdown">
+            <a href="{{ path('app_my_notes') }}" class="block px-4 py-2 text-sm text-white hover:bg-indigo-500">Mon profil & admin</a>
+            <a href="{{ path('app_logout') }}" class="block px-4 py-2 text-sm text-white hover:bg-indigo-500">Déconnexion</a>
+        </div>
+    </div>
+           
                 {% else %}
                    <div class="flex justify-center items-center space-x-2 ">
                 <a href="{{ path('app_login') }}" class="inline-block rounded bg-indigo-300 px-6 py-3 text-sm font-medium text-white transition hover:bg-indigo-700 focus:outline-none focus:ring focus:ring-pink-300" role="menuitem" tabindex="-1" id="user-menu-item-2">Connexion</a>
                 <a href="{{ path('app_register') }}" class="inline-block rounded bg-indigo-900 px-6 py-3 text-sm font-medium text-white transition hover:bg-indigo-700 focus:outline-none focus:ring focus:ring-pink-300" role="menuitem" tabindex="-1" id="user-menu-item-0">Inscription</a>
                 </div>
               {% endif %}
-              
-           
-          </div>
-
-       
-          <div class="hidden absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabindex="-1">
-            
-            {% if app.user %}
-                  <a href="{{ path('app_my_notes') }}" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-0">Mon profil & admin</a>
-                 <a href="{{ path('app_logout') }}" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-2">Déconnexion</a>
-            {# {% else %}
-                <a href="{{ path('app_login') }}" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-2">Connexion</a>
-                <a href="{{ path('app_register') }}" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-0">Inscriptionl</a> #}
-            {% endif %}
            
           </div>
         </div>
@@ -105,6 +82,11 @@
     </div>
   </div>
 </nav>
+
+
+
+
+
         {% block body %}{% endblock %}
 
 
@@ -140,5 +122,20 @@
     </p>
   </div>
 </footer>
+  <script>
+        function toggleDropdown() {
+            var dropdown = document.getElementById("myDropdown");
+            dropdown.classList.toggle("hidden");
+        }
+        window.onclick = function(event) {
+            if (!event.target.closest('.relative')) {
+                var dropdown = document.getElementById("myDropdown");
+                if (!dropdown.classList.contains('hidden')) {
+                    dropdown.classList.add('hidden');
+                }
+            }
+        }
+    </script>
+
     </body>
 </html>
