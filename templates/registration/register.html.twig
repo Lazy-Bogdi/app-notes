@@ -5,7 +5,7 @@
 {% block body %}
 <div class="mx-auto max-w-screen-xl px-4 py-16 sm:px-6 lg:px-8">
   <div class="mx-auto max-w-lg text-center">
-    <h1 class="text-2xl font-bold sm:text-3xl">Inscription</h1>
+    <h1 class="text-2xl font-bold sm:text-3xl uppercase">Inscription</h1>
     <p class="mt-4 text-gray-500">
       Lorem ipsum dolor sit amet consectetur adipisicing elit. Et libero nulla eaque error neque ipsa culpa autem, at itaque nostrum!
     </p>
@@ -27,7 +27,7 @@
   <div>
     {{ form_row(registrationForm.plainPassword, {
       'label': false,
-      'attr': {'class': 'w-full rounded-lg border-gray-200 p-4 text-sm shadow-sm', 'placeholder': 'Créez un mot de passe'}
+      'attr': {'class': 'w-full rounded-lg border-gray-200 p-4 text-sm shadow-sm', 'placeholder': 'Mot de passe'}
     }) }}
   </div>
   <div class="flex items-center">
@@ -42,7 +42,7 @@
   <div class="flex items-center justify-between">
     <p class="text-sm text-gray-500">
       Déjà un compte ?
-      <a class="underline" href="#">Se connecter</a>
+      <a class="underline" href="{{ path('app_login') }}">Se connecter</a>
     </p>
     <button type="submit" class="inline-block rounded-lg bg-blue-500 px-5 py-3 text-sm font-medium text-white">
       S'inscrire
