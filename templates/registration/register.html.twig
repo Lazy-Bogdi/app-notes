@@ -3,17 +3,51 @@
 {% block title %}Inscription{% endblock %}
 
 {% block body %}
-    <h1>Inscription</h1>
+<div class="mx-auto max-w-screen-xl px-4 py-16 sm:px-6 lg:px-8">
+  <div class="mx-auto max-w-lg text-center">
+    <h1 class="text-2xl font-bold sm:text-3xl">Inscription</h1>
+    <p class="mt-4 text-gray-500">
+      Lorem ipsum dolor sit amet consectetur adipisicing elit. Et libero nulla eaque error neque ipsa culpa autem, at itaque nostrum!
+    </p>
+  </div>
 
-    {{ form_errors(registrationForm) }}
+  {{ form_start(registrationForm, {'attr': {'class': 'mx-auto mt-8 mb-0 max-w-md space-y-4'}}) }}
+  <div>
+    {{ form_row(registrationForm.name, {
+      'label': false,
+      'attr': {'class': 'w-full rounded-lg border-gray-200 p-4 text-sm shadow-sm', 'placeholder': 'Nom complet'}
+    }) }}
+  </div>
+  <div>
+    {{ form_row(registrationForm.email, {
+      'label': false,
+      'attr': {'class': 'w-full rounded-lg border-gray-200 p-4 text-sm shadow-sm', 'placeholder': 'Adresse email'}
+    }) }}
+  </div>
+  <div>
+    {{ form_row(registrationForm.plainPassword, {
+      'label': false,
+      'attr': {'class': 'w-full rounded-lg border-gray-200 p-4 text-sm shadow-sm', 'placeholder': 'Créez un mot de passe'}
+    }) }}
+  </div>
+  <div class="flex items-center">
+    {{ form_widget(registrationForm.agreeTerms, {
+      'attr': {'class': 'mr-2'}
+    }) }}
+    {{ form_label(registrationForm.agreeTerms, 'J\'accepte les termes et conditions', {
+      'attr': {'class': 'text-sm text-gray-500'}
+    }) }}
+  </div>
 
-    {{ form_start(registrationForm) }}
-        {{ form_row(registrationForm.email) }}
-        {{ form_row(registrationForm.plainPassword, {
-            label: 'Mot de passe'
-        }) }}
-        {{ form_row(registrationForm.agreeTerms) }}
-
-        <button type="submit" class="btn">S'inscrire</button>
-    {{ form_end(registrationForm) }}
+  <div class="flex items-center justify-between">
+    <p class="text-sm text-gray-500">
+      Déjà un compte ?
+      <a class="underline" href="#">Se connecter</a>
+    </p>
+    <button type="submit" class="inline-block rounded-lg bg-blue-500 px-5 py-3 text-sm font-medium text-white">
+      S'inscrire
+    </button>
+  </div>
+  {{ form_end(registrationForm) }}
+</div>
 {% endblock %}
