@@ -31,7 +31,7 @@ class NoteController extends AbstractController
         if ($currentUser === null) {
             return $this->redirectToRoute('app_login', [], Response::HTTP_SEE_OTHER);
         }
-        $notes = $noteRepository->findBy(['owner' => $currentUser], ['created_at' => 'desc']);
+        $notes = $noteRepository->findBy(['owner' => $currentUser], ['createdAt' => 'desc']);
         
         return $this->render('note/index.html.twig', [
             'notes' => $notes,
