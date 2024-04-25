@@ -3,36 +3,23 @@
 {% block title %}Note{% endblock %}
 
 {% block body %}
-    <h1>Note</h1>
+    <div class="container mx-auto px-4 mt-20 mb-50">
+        <h2 class="text-3xl text-center font-bold uppercase   sm:text-3xl">{{ note.title }}</h2>
+        <br>
+        <p class="mb-5 text-center font-bold ">Créer le : {{ note.createdAt ? note.createdAt|date('d F Y') : '' }}</p>
+<section class="bg-gray-50">
+  <div class="p-8 md:p-12 lg:px-16 lg:py-24">
+    <div class="mx-auto max-w-lg text-center">
+      <p class="hidden text-black-500 sm:mt-4 sm:block">
+     {{ note.content }}
+      </p>
+    </div>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ note.id }}</td>
-            </tr>
-            <tr>
-                <th>Title</th>
-                <td>{{ note.title }}</td>
-            </tr>
-            <tr>
-                <th>Content</th>
-                <td>{{ note.content }}</td>
-            </tr>
-            <tr>
-                <th>CreatedAt</th>
-                <td>{{ note.createdAt ? note.createdAt|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>UpdatedAt</th>
-                <td>{{ note.updatedAt ? note.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-        </tbody>
-    </table>
-
-    <a href="{{ path('app_note_index') }}">back to list</a>
-
-    <a href="{{ path('app_note_edit', {'id': note.id}) }}">edit</a>
-
-    {{ include('note/_delete_form.html.twig') }}
+  </div>
+  
+</section>
+        </div>
+        <div class="text-center mb-10">
+    <a class="mt-8 inline-block rounded bg-indigo-600 px-12 py-3 text-sm font-medium text-white transition hover:bg-indigo-700 focus:outline-none focus:ring focus:ring-yellow-400" href="{{ path('app_note_index') }}">Retour</a>
+    </div>
 {% endblock %}

@@ -3,9 +3,14 @@
 {% block title %}New Note{% endblock %}
 
 {% block body %}
-    <h1>Create new Note</h1>
+    <div class="container mx-auto px-4 mt-20 mb-50">
+        <h2 class="text-3xl text-center font-bold uppercase   sm:text-3xl">Créer un post</h2>
+        <br>
 
     {{ include('note/_form.html.twig') }}
 
-    <a href="{{ path('app_note_index') }}">back to list</a>
+    <div class="text-center mb-10">
+    <a class="mt-8 inline-block rounded  px-12 py-3 text-sm font-medium text-indigo-500 transition hover:bg-indigo-700 hover:text-white focus:outline-none focus:ring focus:ring-yellow-400" href="{{ path('app_note_index') }}">Retour</a>
+    </div>
+    </div>
 {% endblock %}
