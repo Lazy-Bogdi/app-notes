@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -50,6 +51,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     #[ORM\OneToMany(targetEntity: Note::class, mappedBy: 'owner')]
     private Collection $notes;
+
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $profilePictureUrl = null;
 
     public function __construct()
     {
@@ -193,6 +197,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $note->setOwner(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getProfilePictureUrl(): ?string
+    {
+        return $this->profilePictureUrl;
+    }
+
+    public function setProfilePictureUrl(?string $profilePictureUrl): static
+    {
+        $this->profilePictureUrl = $profilePictureUrl;
 
         return $this;
     }
