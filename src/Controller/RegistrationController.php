@@ -31,6 +31,7 @@ class RegistrationController extends AbstractController
             );
             $user->setCreatedAt(new DateTimeImmutable());
             $user->setUpdatedAt(new DateTimeImmutable());
+            $user->setProfilePictureUrl('https://cdn-icons-png.flaticon.com/128/7915/7915354.png');
 
 
             $entityManager->persist($user);
@@ -38,7 +39,7 @@ class RegistrationController extends AbstractController
 
             // do anything else you need here, like send an email
 
-            return $this->redirectToRoute('app_index');
+            return $this->redirectToRoute('app_login');
         }
 
         return $this->render('registration/register.html.twig', [
