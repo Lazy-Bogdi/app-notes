@@ -1,4 +1,22 @@
-{{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
+{{ form_start(form, {'attr': {'class': 'mx-auto mb-0 mt-8 max-w-md space-y-4'}}) }}
+
+<div>
+    {{ form_label(form.title, 'Title', {'attr': {'class': 'sr-only'}}) }}
+    {{ form_widget(form.title, {
+        'attr': {'class': 'w-full rounded-lg border-gray-200 p-4 text-sm shadow-sm', 'placeholder': 'Enter title'}
+    }) }}
+</div>
+
+<div>
+    {{ form_label(form.content, 'Content', {'attr': {'class': 'sr-only'}}) }}
+    {{ form_widget(form.content, {
+        'attr': {'class': 'w-full rounded-lg border-gray-200 p-4 text-sm shadow-sm', 'placeholder': 'Enter content'}
+    }) }}
+</div>
+<div class="text-center">
+<button type="submit" class="mt-2 inline-block rounded bg-indigo-600 px-12 py-3 text-sm font-medium text-white transition hover:bg-indigo-700 focus:outline-none focus:ring focus:ring-yellow-400" ">
+    {{ button_label|default('Ajouter') }}
+</button>
+</div>
+
 {{ form_end(form) }}
