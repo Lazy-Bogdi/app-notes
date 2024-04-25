@@ -6,9 +6,9 @@
 
 
 
-<div class="container mx-auto px-4 mt-20">
-<h1 class="text-center ">Les posts disponibles</h1>
-  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+<div class="container mx-auto px-4 mt-20 mb-20">
+<h1 class="text-center text-4xl	uppercase">Les posts disponibles</h1>
+  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mt-10">
     {% for note in notes %}
       <article class="rounded-lg border border-gray-100 bg-white p-4 shadow-sm transition hover:shadow-lg">
         <span class="inline-block rounded bg-blue-600 p-2 text-white">
@@ -23,11 +23,14 @@
             {{ note.title }}
           </h3>
         </a>
-        <p class="mt-2 line-clamp-3 text-sm text-gray-500">
-          {{ note.content }}
+        <p class="mt-2 line-clamp-3 text-sm text-gray-500 mt-5 mb-5">
+          {{ note.content|slice(0, 20) }}{% if note.content|length > 20 %}...{% endif %}
         </p>
-        <a href="#" class="group mt-4 inline-flex items-center gap-1 text-sm font-medium text-blue-600">
-          {{ note.createdAt ? note.createdAt|date('Y-m-d H:i:s') : '' }}
+         <p class="mt-2 line-clamp-3 text-sm text-indigo-500">
+         {{ note.createdAt ? note.createdAt|date('d F Y') : '' }}
+        </p>
+        <a href="{{ path('app_note_show', {'id': note.id}) }}" class="group mt-4 inline-flex items-center gap-1 text-sm font-medium text-indigo-600">
+         En savoir plus
           <span aria-hidden="true" class="block transition-all group-hover:ms-0.5 rtl:rotate-180">
             &rarr;
           </span>
