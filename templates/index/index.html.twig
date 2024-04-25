@@ -25,7 +25,7 @@
         </p>
 
         <a
-          href="{{ path('app_index') }}"
+          href="{{ path('app_note_index') }}"
           class="mt-8 inline-block rounded bg-indigo-600 px-12 py-3 text-sm font-medium text-white transition hover:bg-indigo-700 focus:outline-none focus:ring focus:ring-yellow-400"
         >
         Voir les posts
@@ -67,9 +67,17 @@
         </a>
       </article>
     {% else %}
-      <p>No records found.</p>
+      <p>Pas de post en ligne.</p>
     {% endfor %}
   </div>
+  <div class="text-center">
+   <a
+          href="{{ path('app_note_index') }}"
+          class="mt-8 inline-block rounded bg-indigo-600 px-12 py-3 text-sm font-medium text-white transition hover:bg-indigo-700 focus:outline-none focus:ring focus:ring-yellow-400"
+        >
+        Voir les posts
+        </a>
+        </div>
 </div>
 
 {% endblock %}

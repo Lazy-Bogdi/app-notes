@@ -33,7 +33,7 @@ class NoteController extends AbstractController
         }
         $notes = $noteRepository->findBy(['owner' => $currentUser], ['createdAt' => 'desc']);
         
-        return $this->render('note/index.html.twig', [
+        return $this->render('note/index-2.html.twig', [
             'notes' => $notes,
         ]);
     }
@@ -56,7 +56,7 @@ class NoteController extends AbstractController
             $entityManager->persist($note);
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_note_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_my_notes', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('note/new.html.twig', [
@@ -86,7 +86,7 @@ class NoteController extends AbstractController
             $note->setUpdatedAt(new DateTimeImmutable());
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_note_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_my_notes', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('note/edit.html.twig', [
@@ -103,6 +103,6 @@ class NoteController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('app_note_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_my_notes', [], Response::HTTP_SEE_OTHER);
     }
 }
