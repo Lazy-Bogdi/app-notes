@@ -14,8 +14,12 @@ class NoteType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('title')
-            ->add('content')
+            ->add('title', null, [
+                'label' => 'Titre de la note'
+            ])
+            ->add('content', null, [
+                'label' => 'Contenu de la note'
+            ])
             // ->add('createdAt', null, [
             //     'widget' => 'single_text',
             // ])
